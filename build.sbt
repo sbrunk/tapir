@@ -180,6 +180,7 @@ lazy val allAggregates = core.projectRefs ++
 
 val testJVM = taskKey[Unit]("Test JVM projects")
 val testJS = taskKey[Unit]("Test JS projects")
+val fastOptJSTests = taskKey[Unit]("Build and link JS tests")
 
 def filterProject(p: String => Boolean) =
   ScopeFilter(inProjects(allAggregates.filter(pr => p(display(pr.project))): _*))
@@ -191,7 +192,8 @@ lazy val rootProject = (project in file("."))
     publishArtifact := false,
     name := "tapir",
     testJVM := (test in Test).all(filterProject(p => !p.contains("JS") && !p.contains("Native"))).value,
-    testJS := (test in Test).all(filterProject(_.contains("JS"))).value
+    testJS := (test in Test).all(filterProject(_.contains("JS"))).value,
+    fastOptJSTests := (fastOptJS in Test).all(filterProject(_.contains("JS"))).value
   )
   .aggregate(allAggregates: _*)
 
