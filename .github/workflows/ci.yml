@@ -28,9 +28,9 @@ jobs:
           ~/.coursier
         key: sbt-cache-${{ runner.os }}-${{ matrix.target-platform }}-${{ hashFiles('project/build.properties') }}
     - name: Compile
-      run: sbt -v compile compileDocumentation
+      run: sbt compile compileDocumentation
     - name: Test
-      run: sbt -v mimaReportBinaryIssues test${{ matrix.target-platform }}
+      run: sbt mimaReportBinaryIssues test${{ matrix.target-platform }}
     - name: Cleanup
       run: |
         rm -rf "$HOME/.ivy2/local" || true
