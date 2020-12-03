@@ -10,7 +10,7 @@ jobs:
       matrix:
         target-platform: [ "JS" ]
     env:
-      JAVA_OPTS: -Xmx5200M
+      JAVA_OPTS: -Xmx4200M
     steps:
     - name: Checkout
       uses: actions/checkout@v2
