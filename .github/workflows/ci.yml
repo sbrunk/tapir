@@ -30,11 +30,11 @@ jobs:
       run: sbt -v compile compileDocumentation
     - name: Compile and link Scala.js Tests
       if: matrix.target-platform == 'JS'
-      run: sbt -v test fastOptJSTests
+      run: sbt -v fastOptJSTests
     - name: Test
-      run: sbt -v mimaReportBinaryIssues test${{ matrix.target-platform }}
       env:
         JAVA_OPTS: -Xmx2G
+      run: sbt -v mimaReportBinaryIssues test${{ matrix.target-platform }}
     - name: Cleanup
       run: |
         rm -rf "$HOME/.ivy2/local" || true
