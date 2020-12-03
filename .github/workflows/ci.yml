@@ -8,9 +8,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target-platform: [ "JVM", "JS" ]
+        target-platform: [ "JS" ]
     env:
-      JAVA_OPTS: -Xmx4G
+      JAVA_OPTS: -Xmx5632M
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -26,10 +26,8 @@ jobs:
           ~/.ivy2/cache
           ~/.coursier
         key: sbt-cache-${{ runner.os }}-${{ matrix.target-platform }}-${{ hashFiles('project/build.properties') }}
-    - name: Compile
-      run: sbt -v compile compileDocumentation
     - name: Compile Test
-      run: sbt -v mimaReportBinaryIssues test:compile
+      run: sbt -v test:fastOptJS
     - name: Test
       run: sbt -v test${{ matrix.target-platform }}
     - name: Cleanup
