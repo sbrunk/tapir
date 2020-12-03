@@ -30,7 +30,7 @@ jobs:
     - name: Compile
       run: sbt compile compileDocumentation
     - name: Test
-      run: sbt mimaReportBinaryIssues test${{ matrix.target-platform }}
+      run: sbt 'mimaReportBinaryIssues test:compile' && sbt test${{ matrix.target-platform }}
     - name: Cleanup
       run: |
         rm -rf "$HOME/.ivy2/local" || true
