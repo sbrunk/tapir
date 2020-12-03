@@ -37,7 +37,7 @@ jobs:
       run: sbt -v fastOptJSTests
     - name: Test
       env:
-        JAVA_OPTS: "-Xmx"${{ matrix.test-heapsize }}
+        JAVA_OPTS: "-Xmx${{ matrix.test-heapsize }}"
       run: sbt -v mimaReportBinaryIssues test${{ matrix.target-platform }}
     - name: Cleanup
       run: |
