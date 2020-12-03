@@ -8,7 +8,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target-platform: [ "JS" ]
+        include:
+          - target-platform: "JVM"
+            test-heapsize: "6G"
+          - target-platform: "JS"
+            test-heapsize: "1G"
     env:
       JAVA_OPTS: -Xmx6G
     steps:
@@ -33,7 +37,7 @@ jobs:
       run: sbt -v fastOptJSTests
     - name: Test
       env:
-        JAVA_OPTS: -Xmx3G
+        JAVA_OPTS: "-Xmx"${{ matrix.test-heapsize }}
       run: sbt -v mimaReportBinaryIssues test${{ matrix.target-platform }}
     - name: Cleanup
       run: |

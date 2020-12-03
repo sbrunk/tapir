@@ -106,7 +106,7 @@ val commonJsSettings = commonSettings ++ downloadGeckoDriverSettings ++ Seq(
     new org.scalajs.jsenv.selenium.SeleniumJSEnv(
       {
         val options = new org.openqa.selenium.firefox.FirefoxOptions()
-        val args = (if (debugging) Seq("--devtools") else Seq("-headless"))
+        val args = if (debugging) Seq("--devtools") else Seq("-headless")
         options.addArguments(args: _*)
         options
       },
