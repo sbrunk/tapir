@@ -28,6 +28,9 @@ jobs:
         key: sbt-cache-${{ runner.os }}-${{ matrix.target-platform }}-${{ hashFiles('project/build.properties') }}
     - name: Compile
       run: sbt -v compile compileDocumentation
+    - name: Compile and link JS Tests
+      if: matrix.target-platform == "JS"
+      run: sbt -v test fastOptJSTests
     - name: Test
       run: sbt -v mimaReportBinaryIssues test${{ matrix.target-platform }}
       env:
