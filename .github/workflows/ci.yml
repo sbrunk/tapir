@@ -10,7 +10,7 @@ jobs:
       matrix:
         target-platform: [ "JS" ]
     env:
-      JAVA_OPTS: -Xmx3700M
+      JAVA_OPTS: -Xmx5800M
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -30,6 +30,8 @@ jobs:
       run: sbt -v test:fastOptJS
     - name: Test
       run: sbt -v test${{ matrix.target-platform }}
+      env:
+        JAVA_OPTS: -Xmx3G
     - name: Cleanup
       run: |
         rm -rf "$HOME/.ivy2/local" || true
