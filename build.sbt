@@ -115,6 +115,7 @@ val commonJsSettings = commonSettings ++ downloadGeckoDriverSettings ++ Seq(
         .withKeepAlive(debugging)
     )
   },
+  parallelExecution in Test := false,
   test in Test := (test in Test)
     .dependsOn(downloadGeckoDriver)
     .value

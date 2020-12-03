@@ -33,7 +33,7 @@ jobs:
       run: sbt -v fastOptJSTests
     - name: Test
       env:
-        JAVA_OPTS: -Xmx2G
+        JAVA_OPTS: -Xmx3G
       run: sbt -v mimaReportBinaryIssues test${{ matrix.target-platform }}
     - name: Cleanup
       run: |
