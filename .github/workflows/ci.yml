@@ -10,9 +10,9 @@ jobs:
       matrix:
         include:
           - target-platform: "JVM"
-            test-heapsize: "6G"
+            test-heapsize: "-Xmx6G"
           - target-platform: "JS"
-            test-heapsize: "1G"
+            test-heapsize: "-Xmx1500M"
     env:
       JAVA_OPTS: -Xmx6G
     steps:
@@ -37,7 +37,7 @@ jobs:
       run: sbt -v fastOptJSTests
     - name: Test
       env:
-        JAVA_OPTS: "-Xmx${{ matrix.test-heapsize }}"
+        JAVA_OPTS: ${{ matrix.test-heapsize }}
       run: sbt -v mimaReportBinaryIssues test${{ matrix.target-platform }}
     - name: Cleanup
       run: |
