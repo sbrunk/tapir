@@ -59,6 +59,7 @@ def versionedScalaJvmSourceDirectories(sourceDir: File, scalaVersion: String): L
   }
 
 val commonSettings = commonSmlBuildSettings ++ ossPublishSettings ++ Seq(
+  version := "1.11.9",
   organization := "com.softwaremill.sttp.tapir",
   Compile / unmanagedSourceDirectories ++= versionedScalaSourceDirectories((Compile / sourceDirectory).value, scalaVersion.value),
   Test / unmanagedSourceDirectories ++= versionedScalaSourceDirectories((Test / sourceDirectory).value, scalaVersion.value),
@@ -1471,6 +1472,13 @@ lazy val nettyServerSync: ProjectMatrix =
 
 lazy val nettyServerCats: ProjectMatrix = nettyServerProject("cats", catsEffect)
   .settings(
+    version := "1.11.9-netty-request-fix",
+    // overrides for publishing the netty backend hotfix until we have an official release
+    // https://github.com/softwaremill/tapir/pull/4194
+    githubOwner := "sbrunk",
+    githubRepository := "tapir",
+    githubTokenSource := TokenSource.GitConfig("github.token"),
+    publishTo := githubPublishTo.value,
     libraryDependencies ++= Seq(
       "com.softwaremill.sttp.shared" %% "fs2" % Versions.sttpShared,
       "co.fs2" %% "fs2-reactive-streams" % Versions.fs2,
